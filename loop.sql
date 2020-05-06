@@ -32,8 +32,4 @@ BEGIN
     EXIT;
     END LOOP;
 
-    
-    
- 
- 
 END;
