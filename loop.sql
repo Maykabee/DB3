@@ -3,33 +3,41 @@ DECLARE
     genres_name        game.genre_name%TYPE;
     years              game.year%TYPE;
     publishers_name    game.publisher_name%TYPE;
-    game_count        INTEGER := 100;
+    game_count         INTEGER := 9;
 BEGIN
-    games_name:='My cafe';  
-    genres_name:='Simulation';      
-    years:='2010';      
-    publishers_name:='Atari';
+    games_name:='name';  
+    genres_name:='genre';      
+    years:='200';      
+    publishers_name:='publisher';
     
-    INSERT INTO genre(genre_name) VALUES(genres_name);
+    FOR i IN 1..game_count LOOP
+        INSERT INTO genre (genre_name) 
+        VALUES (TRIM(genres_name) || i);
+    END LOOP;
     
-    INSERT INTO publisher(publisher_name) VALUES(publishers_name);
+    FOR i IN 1..game_count LOOP
+        INSERT INTO publisher(publisher_name) 
+        VALUES (TRIM(publishers_name) || i);
+    END LOOP;
+    
     
     INSERT INTO Region(region_name) VALUES ('North_America');
     INSERT INTO Region(region_name) VALUES ('Europe');
     INSERT INTO Region(region_name) VALUES ('Japan');
     INSERT INTO Region(region_name) VALUES ('Rest_of_world');
     
-    LOOP
-    INSERT INTO game(game_name,year,genre_name,publisher_name) VALUES(games_name,years,genres_name,publishers_name);
-    EXIT;
+    FOR i IN 1..game_count LOOP
+    INSERT INTO game(game_name,year,genre_name,publisher_name) 
+    VALUES(TRIM(games_name) || i,TRIM(years) || i,TRIM(genres_name) || i,TRIM(publishers_name) || i);
     END LOOP;
     
-    LOOP
-    INSERT INTO sales(game_name,region_name,sales) VALUES(games_name,'North_America','3.04');
-    INSERT INTO sales(game_name,region_name,sales) VALUES(games_name,'Europe','6.08');
-    INSERT INTO sales(game_name,region_name,sales) VALUES(games_name,'Japan','1.11');
-    INSERT INTO sales(game_name,region_name,sales) VALUES(games_name,'Rest_of_world','2.35');
-    EXIT;
-    END LOOP;
 
+    FOR i IN 1..game_count LOOP
+    INSERT INTO sales(game_name,region_name,sales) VALUES(TRIM(games_name) || i,'North_America',1*i);
+    INSERT INTO sales(game_name,region_name,sales) VALUES(TRIM(games_name) || i,'Europe',3*i);
+    INSERT INTO sales(game_name,region_name,sales) VALUES(TRIM(games_name) || i,'Japan',2*i);
+    INSERT INTO sales(game_name,region_name,sales) VALUES(TRIM(games_name) || i,'Rest_of_world',4*i);
+    END LOOP;
+    
+    
 END;
